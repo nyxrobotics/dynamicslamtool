@@ -738,9 +738,14 @@ void MovingObjectRemoval::pushRawCloudAndPose(pcl::PCLPointCloud2& in_cloud, geo
 
   pcl::fromPCLPointCloud2(in_cloud, *(cb->raw_cloud));  // load latest pointcloud
   tf::poseMsgToTF(pose, cb->ps);                        // load latest pose
-
-  // cb->groundPlaneRemoval(trim_x, trim_y, trim_z);  // ground plane removal (hard coded)
-  cb->groundPlaneRemoval(trim_x, trim_y);  // groud plane removal (voxel covariance)
+  if (enable_voxel_covariance_gp_removal_)
+  {
+    cb->groundPlaneRemoval(trim_x, trim_y);  // groud plane removal (voxel covariance)
+  }
+  if (enable_z_limit_gp_removal_)
+  {
+    cb->groundPlaneRemoval(trim_x, trim_y, trim_z);  // ground plane removal (hard coded)
+  }
   gpr.publish(cb->output_rgp);
 
   cb->computeClusters(ec_distance_threshold, "single_cluster");
@@ -1091,6 +1096,8 @@ void MovingObjectRemoval::showV(pcl::PointCloud<pcl::PointXYZ>::Ptr& c1, pcl::Po
 // 0.1 set variable
 void MovingObjectRemoval::readParams(ros::NodeHandle& main_nh)
 {
+  main_nh.param<bool>("enable_voxel_covariance_gp_removal", enable_voxel_covariance_gp_removal_, false);
+  main_nh.param<bool>("enable_z_limit_gp_removal", enable_z_limit_gp_removal_, true);
   main_nh.param<float>("gp_limit", gp_limit, -0.3);
   main_nh.param<float>("gp_leaf", gp_leaf, 0.1);
   main_nh.param<float>("bin_gap", bin_gap, 10.0);

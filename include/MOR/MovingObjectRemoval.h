@@ -138,6 +138,7 @@ class MovingObjectRemoval
       trim_y, trim_z, ec_distance_threshold, pde_distance_threshold;
   int min_cluster_size, max_cluster_size;
   int method_choice, opc_normalization_factor;
+  bool enable_voxel_covariance_gp_removal_, enable_z_limit_gp_removal_;
   std::string output_topic, debug_topic, marker_topic, input_pointcloud_topic, input_odometry_topic, output_fid,
       debug_fid;
   /*configuration variables*/

@@ -16,10 +16,12 @@ min_cluster_size: 80 #Minimum number of points of collection
 max_cluster_size: 1600 #Maximum number of collection points
 
 #Ground plane removal voxel covariance
+enable_voxel_covariance_gp_removal: false
 gp_leaf: 0.1
 bin_gap: 10
 
 #Ground plane removal hard coded
+enable_z_limit_gp_removal: true
 gp_limit: -0.4
 trim_x: 200
 trim_y: 200
@@ -31,7 +33,7 @@ pde_ub: 0.5
 pde_distance_threshold: 0.15
 
 #Octree pointcloud chance method parameters (needed when method_choice is 2)
-opc_normalization_factor: 6 #The larger the value, the easier it is to recognize dynamic objects
+opc_normalization_factor: 12 #The larger the value, the easier it is to recognize dynamic objects
 
 #Cluster tracking prameters
 volume_constraint: 0.6 #The larger the value, the larger the tolerance volume difference.
